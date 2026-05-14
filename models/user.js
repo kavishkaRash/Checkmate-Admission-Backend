@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import { type } from "node:os";
-import { PassThrough } from "node:stream";
+
 
 const userSchema = new mongoose.Schema({
     email : {

@@ -109,6 +109,56 @@ export function loginUser(req, res) {
     )
 }
 
+export async function getAllUser(req, res) {
+    if (!isAdmin(req)) {
+        return res.status(401).json({ message: "Forbidden" }); // ← return added
+    }
+
+    try {
+        const users = await User.find();
+        res.json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Failed To get Users" });
+    }
+}
+
+export async function blockOrUnblock(req,res) {
+    if (!isAdmin(req)) {
+        res.status(401).json({
+            message: "Forbidden"
+        })
+        return;
+    }
+
+    if (req.user.email === req.params.email) {
+        res.status(400).json({
+            message: "You Can't Block Yourself"
+        });
+        return;
+    }
+
+    try {
+        await User.updateOne(
+            {
+                email: req.params.email
+            },
+            {
+                $set: {
+                    isBlock: req.body.isBlock
+                }
+            }
+        )
+        res.json({
+            message: "User Updated Successfully"
+        })
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            message: "Failed To Block or Unblokk User"
+        })
+    }
+}
+
 export function isAdmin(req) {
     if ((req.user == "null")){
         return false;

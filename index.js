@@ -13,28 +13,28 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.use(
-    (req,res,next) => {
-        let token = req.headers.authorization;
+app.use((req, res, next) => {
+    let token = req.headers.authorization;
+    console.log("MIDDLEWARE HIT:", req.path);  // ← add this
+    console.log("TOKEN RECEIVED:", token);      // ← add this
 
-        
-        if(token != null) {
-            token = token.replace("Bearer ", "");
-            jwt.verify(token, process.env.JWT_SECRET_KEY, 
-                (err, decoded) => {
-                    if(decoded == null) {
-                        res.json({
-                            message: "Unauthorized"
-                        })
-                        return
-                    }else {
-                        req.user = decoded;
-                        next();
-                    }
-            })
-        }
+    if (token != null) {
+        token = token.replace("Bearer ", "");
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+            console.log("JWT ERR:", err);        // ← add this
+            console.log("JWT DECODED:", decoded); // ← add this
+            if (decoded == null) {
+                res.json({ message: "Unauthorized" });
+                return;
+            } else {
+                req.user = decoded;
+                next();
+            }
+        });
+    } else {
+        next();
     }
-)
+});
 
 const connectionString = process.env.MONGO_URL;
 
