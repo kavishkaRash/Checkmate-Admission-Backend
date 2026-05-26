@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import userRouter from "./routes/userRouter.js";
 import jwt from "jsonwebtoken";
+import appointmentRouter from "./routes/appointmentRouter.js";
 
 
 dotenv.config();
@@ -50,6 +51,7 @@ mongoose.connect(connectionString).then(
 );
 
 app.use("/api/users", userRouter);
+app.use("/api/appointment", appointmentRouter);
 
 app.listen(5001, () => {
     console.log("Server is running on port 5001");
