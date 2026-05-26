@@ -6,6 +6,7 @@ import userRouter from "./routes/userRouter.js";
 import jwt from "jsonwebtoken";
 import appointmentRouter from "./routes/appointmentRouter.js";
 import inquiryRouter from "./routes/inquireyRouter.js";
+import studentRouter from "./routes/studentRouter.js";
 
 
 dotenv.config();
@@ -23,9 +24,8 @@ app.use((req, res, next) => {
         token = token.replace("Bearer ", "");
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
             
-            if (decoded == null) {
-                res.json({ message: "Unauthorized" });
-                return;
+            if (err || decoded == null) {
+                return res.status(401).json({ success: false, message: "Unauthorized access" });
             } else {
                 req.user = decoded;
                 next();
@@ -52,6 +52,7 @@ mongoose.connect(connectionString).then(
 app.use("/api/users", userRouter);
 app.use("/api/appointment", appointmentRouter);
 app.use("/api/inquiries", inquiryRouter);
+app.use("/api/students", studentRouter);
 
 app.listen(5001, () => {
     console.log("Server is running on port 5001");
