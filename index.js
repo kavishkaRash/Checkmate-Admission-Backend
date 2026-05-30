@@ -8,6 +8,7 @@ import appointmentRouter from "./routes/appointmentRouter.js";
 import inquiryRouter from "./routes/inquireyRouter.js";
 import studentRouter from "./routes/studentRouter.js";
 import reviewRouter from "./routes/reviewRouter.js";
+import adminRouter from "./routes/adminRouter.js";
 
 
 dotenv.config();
@@ -55,6 +56,7 @@ app.use("/api/appointment", appointmentRouter);
 app.use("/api/inquiries", inquiryRouter);
 app.use("/api/students", studentRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/dashboard", adminRouter);
 
 app.listen(5001, () => {
     console.log("Server is running on port 5001");
