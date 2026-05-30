@@ -1,6 +1,5 @@
 import Student from "../models/student.js";
 
-// ─── CREATE ───────────────────────────────────────────────────────────────────
 export const addStudent = async (req, res) => {
   try {
     const student = new Student(req.body);
@@ -23,7 +22,6 @@ export const addStudent = async (req, res) => {
   }
 };
 
-// ─── GET ALL WITH ADVANCED FILTERS ────────────────────────────────────────────
 export const getStudents = async (req, res) => {
   try {
     const { university, program, city, search, semester, year } = req.query;
@@ -33,15 +31,12 @@ export const getStudents = async (req, res) => {
     if (program) filter.applyingProgram = program;
     if (city) filter.city = city;
     
-    // 1. Semester Filter එක සාමාන්‍ය විදියට එකතු කරනවා
     if (semester) filter.applyingSemester = semester;
     
-    // 2. Year Filter එක Index Number එක ඇතුලෙන් පරීක්ෂා කරනවා (උදා: /2024/)
     if (year) {
       filter.indexNo = { $regex: `/${year}/`, $options: "i" };
     }
 
-    // 3. Global Search (Name, Index, Passport, Email)
     if (search) {
       filter.$or = [
         { name: { $regex: search, $options: "i" } },
@@ -51,8 +46,7 @@ export const getStudents = async (req, res) => {
       ];
     }
 
-    // Server Terminal එකේ මොන වගේ Filters ද ක්‍රියාත්මක වෙන්නේ කියලා බලාගන්න ලොග් එකක්
-    console.log("⚡ Active Filter Query:", JSON.stringify(filter, null, 2));
+
 
     const students = await Student.find(filter).sort({ createdAt: -1 });
 
@@ -66,7 +60,6 @@ export const getStudents = async (req, res) => {
   }
 };
 
-// ─── GET ONE ──────────────────────────────────────────────────────────────────
 export const getStudent = async (req, res) => {
   try {
     const student = await Student.findById(req.params.id);
@@ -83,7 +76,6 @@ export const getStudent = async (req, res) => {
   }
 };
 
-// ─── UPDATE ───────────────────────────────────────────────────────────────────
 export const updateStudent = async (req, res) => {
   try {
     const student = await Student.findByIdAndUpdate(
@@ -115,7 +107,6 @@ export const updateStudent = async (req, res) => {
   }
 };
 
-// ─── DELETE ───────────────────────────────────────────────────────────────────
 export const deleteStudent = async (req, res) => {
   try {
     const student = await Student.findByIdAndDelete(req.params.id);

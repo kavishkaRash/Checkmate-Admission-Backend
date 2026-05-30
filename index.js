@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 import appointmentRouter from "./routes/appointmentRouter.js";
 import inquiryRouter from "./routes/inquireyRouter.js";
 import studentRouter from "./routes/studentRouter.js";
+import reviewRouter from "./routes/reviewRouter.js";
 
 
 dotenv.config();
@@ -53,6 +54,7 @@ app.use("/api/users", userRouter);
 app.use("/api/appointment", appointmentRouter);
 app.use("/api/inquiries", inquiryRouter);
 app.use("/api/students", studentRouter);
+app.use("/api/reviews", reviewRouter);
 
 app.listen(5001, () => {
     console.log("Server is running on port 5001");
