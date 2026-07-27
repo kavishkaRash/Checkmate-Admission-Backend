@@ -29,7 +29,6 @@ const appointmentSchema = new mongoose.Schema(
 
     university: {
       type: String,
-      required: true,
       trim: true,
     },
 
@@ -39,7 +38,7 @@ const appointmentSchema = new mongoose.Schema(
       trim: true,
     },
 
-    address: {
+    city: {
       type: String,
       required: true,
       trim: true,
