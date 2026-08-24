@@ -34,44 +34,6 @@ export const getStudents = async (req, res) => {
     if (semester) filter.applyingSemester = semester;
     
     if (year) {
-      filter.indexNo = { $regex: `/${year}/`, $options: "i" };
-    }
-
-    if (search) {
-      filter.$or = [
-        { name: { $regex: search, $options: "i" } },
-        { indexNo: { $regex: search, $options: "i" } },
-        { passportNumber: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-      ];
-    }
-
-
-
-    const students = await Student.find(filter).sort({ createdAt: -1 });
-
-    res.status(200).json({
-      success: true,
-      count: students.length,
-      data: students,
-    });
-  } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
-};
-
-export const getStudents = async (req, res) => {
-  try {
-    const { university, program, city, search, semester, year } = req.query;
-
-    const filter = {};
-    if (university) filter.applyingUniversity = university;
-    if (program) filter.applyingProgram = program;
-    if (city) filter.city = city;
-    
-    if (semester) filter.applyingSemester = semester;
-    
-    if (year) {
       filter.indexNo = { $regex: `${year}`, $options: "i" };
     }
 
