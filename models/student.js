@@ -4,17 +4,16 @@ const studentSchema = new mongoose.Schema(
     {
         indexNo: {
             type: String,
-            required: true,
             unique: true,
             trim: true,
         },
         name: {
             type: String,
             required: true,
-            trim: true,
+            
         },
         birthday: {
-            type: String, // or Date if you want to parse it
+            type: String, 
             required: true,
         },
         passportNumber: {
@@ -27,15 +26,15 @@ const studentSchema = new mongoose.Schema(
        
         applyingUniversity: {
             type: String,
-            required: true,
+            
         },
         applyingProgram: {
             type: String,
-            required: true,
+            
         },
         applyingMajor: {
             type: String,
-            required: true,
+            
         },
 
         
@@ -46,7 +45,6 @@ const studentSchema = new mongoose.Schema(
         parentsPhone: { type: String },
         email: {
             type: String,
-            required: true,
             unique: true,
             lowercase: true,
             trim: true,
@@ -61,8 +59,8 @@ const studentSchema = new mongoose.Schema(
         schoolName: { type: String },
         results: { type: String },
         gpa: { type: String },
-        entranceDate: { type: String }, // or Date
-        graduateDate: { type: String }, // or Date
+        entranceDate: { type: String },
+        graduateDate: { type: String }, 
 
 
         
@@ -72,7 +70,7 @@ const studentSchema = new mongoose.Schema(
 
         applyingMajor: {
             type: String,
-            required: true,
+            
         },
         
         applyingSemester: {
