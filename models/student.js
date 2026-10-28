@@ -10,10 +10,10 @@ const studentSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
-            
+
         },
         birthday: {
-            type: String, 
+            type: String,
             required: true,
         },
         passportNumber: {
@@ -23,21 +23,21 @@ const studentSchema = new mongoose.Schema(
             trim: true,
         },
 
-       
+
         applyingUniversity: {
             type: String,
-            
+
         },
         applyingProgram: {
             type: String,
-            
+
         },
         applyingMajor: {
             type: String,
-            
+
         },
 
-        
+
         city: { type: String },
         postalCode: { type: String },
         address: { type: String },
@@ -50,37 +50,43 @@ const studentSchema = new mongoose.Schema(
             trim: true,
         },
 
-        
+
         sponsorName: { type: String },
         sponsorRelation: { type: String },
 
-       
+
         instituteCategory: { type: String },
         schoolName: { type: String },
         results: { type: String },
         gpa: { type: String },
         entranceDate: { type: String },
-        graduateDate: { type: String }, 
+        graduateDate: { type: String },
 
 
-        
+
         ieltsScore: { type: String, default: "N/A" },
         showMoney: { type: String },
         incomeSources: { type: String },
 
         applyingMajor: {
             type: String,
-            
+
         },
-        
+
         applyingSemester: {
             type: String,
             enum: ["January", "March", "June", "September", "N/A"],
             default: "January"
         },
+
+        refference: {
+            type: String,
+            enum: ["N/A", "CM", "H", "M", "R", "C1", "C2", "C3", "C4", "C5"],
+            default: "N/A"
+        },
     },
     {
-        timestamps: true, 
+        timestamps: true,
     }
 );
 
