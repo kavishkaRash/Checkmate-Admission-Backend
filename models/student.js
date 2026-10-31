@@ -79,6 +79,12 @@ const studentSchema = new mongoose.Schema(
             default: "January"
         },
 
+        applyingYear: {
+            type: Number,
+            min: 2020,
+            max: 2100,
+            default: () => new Date().getFullYear(),
+        },
         refference: {
             type: String,
             enum: ["N/A", "CM", "H", "M", "R", "C1", "C2", "C3", "C4", "C5"],
