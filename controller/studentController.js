@@ -1,9 +1,20 @@
 import Student from "../models/student.js";
+import generateIndexNo from "../lib/generateIndexNo.js";
 
 export const addStudent = async (req, res) => {
   try {
-    const student = new Student(req.body);
-    const saved = await student.save();
+    let saved;
+
+    for (let i = 0; i < 5; i++) {
+      try {
+        Object.assign(req.body, await generateIndexNo(req.body));
+        saved = await new Student(req.body).save();
+        break;
+      } catch (e) {
+
+        if (!e.keyPattern?.indexSeq || i === 4) throw e;
+      }
+    }
 
     res.status(201).json({
       success: true,
@@ -30,9 +41,9 @@ export const getStudents = async (req, res) => {
     if (university) filter.applyingUniversity = university;
     if (program) filter.applyingProgram = program;
     if (city) filter.city = city;
-    
+
     if (semester) filter.applyingSemester = semester;
-    
+
     if (year) {
       filter.indexNo = { $regex: `${year}`, $options: "i" };
     }
@@ -76,9 +87,11 @@ export const getStudent = async (req, res) => {
 
 export const updateStudent = async (req, res) => {
   try {
+    const { indexNo, indexKey, indexSeq, ...updates } = req.body;
+
     const student = await Student.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      { $set: updates },
       { new: true, runValidators: true }
     );
 

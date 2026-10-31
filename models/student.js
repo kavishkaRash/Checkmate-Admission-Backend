@@ -90,10 +90,17 @@ const studentSchema = new mongoose.Schema(
             enum: ["N/A", "CM", "H", "M", "R", "C1", "C2", "C3", "C4", "C5"],
             default: "N/A"
         },
+        indexKey: { type: String },   
+        indexSeq: { type: Number },   
     },
     {
         timestamps: true,
     }
+);
+
+studentSchema.index(
+    { indexKey: 1, indexSeq: 1 },
+    { unique: true, partialFilterExpression: { indexSeq: { $type: "number" } } }
 );
 
 const Student = mongoose.model("Student", studentSchema);
